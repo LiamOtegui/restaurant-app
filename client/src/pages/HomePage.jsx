@@ -13,7 +13,7 @@ const HomePage = () => {
     const getProducts = async () => {
         try {
             setLoading(true)
-            const response = await axios.get('http://localhost:5000/api/products')
+            const response = await axios.get('http://localhost:5000/products')
             setProducts(response.data)
             setLoading(false)
         } catch (error) {
@@ -27,7 +27,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <Link to='/create' className='inline-block bg-orange-700 px-3.5 py-2 font-bold mt-5 mb-2 ml-4 text-lg rounded text-white hover:bg-orange-600 font'>
+            <Link to='/create' className='inline-block bg-orange-500 px-3.5 py-2 font-bold mt-5 mb-2 ml-4 text-lg rounded text-white hover:bg-orange-400 font'>
                 Create a product
             </Link>
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4 ml-4'>

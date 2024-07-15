@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import upperCase from '../utils/upperCase'
 
 const CreatePage = () => {
@@ -9,60 +9,81 @@ const CreatePage = () => {
   const [quantity, setQuantity] = useState('')
   const [price, setPrice] = useState('')
   const [image, setImage] = useState('')
-  const [loading, setLoading] = useState(false)
 
-  const onSubmitForm = async () => {
+  const [saveButton, setSaveButton] = useState(false)
+  const navigate = useNavigate()
+
+  const onSubmitForm = async (event) => {
+    event.preventDefault()
     if (name === '' || quantity === '' || price === '' || image === '') {
       alert('Please fill all the inputs')
       return
     }
     try {
-      setLoading(true)
-      const response = await axios.post("http://localhost:5000/products", {
+      setSaveButton(true)
+      const response = await axios.post('http://localhost:5000/products', {
         name: name,
         quantity: quantity,
         price: price,
         image: image
       })
-      alert(`${upperCase(response.data.name)} created with success!`)
-      setLoading(false)
+      alert(`${upperCase(response.data.name)} was created with success!`)
+      setSaveButton(false)
+      navigate('/')
     } catch (error) {
-      console.error(error.message);
+      console.log();
     }
   }
 
   return (
-    <div className='max-w-lg bg-white shadow-lg mx-auto p-7 rounded mt-6'>
-      <h2 className='font-semibold text-center text-2xl mb-4'>
-        Create Page
-      </h2>
-      <form onSubmit={onSubmitForm}>
-        <div className='space-y-2'>
-          <div>
-            <input type='text' value={name} onChange={(event) => setName(event.target.value)} className='w-full border p-3 rounded' placeholder='Name of the product' />
+    <div className='flex justify-center mt-8'>
+      <div className='inline-block'>
+        <div className='flex flex-col items-center bg-white p-7 rounded-md'>
+          <div className='mb-4 text-xl pb-3'>Create Product:</div>
+          <div className='bg-white flex justify-center'>
+            <form
+              onSubmit={onSubmitForm}
+              className='space-y-4'>
+              <div className='flex flex-col space-y-5'>
+                <input
+                  type='text'
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder='Name'
+                  className='border border-gray-400 rounded w-[18rem] p-2'
+                />
+                <input
+                  type='number'
+                  value={quantity}
+                  onChange={(event) => setQuantity(event.target.value)}
+                  placeholder='Quantity'
+                  className='border border-gray-400 rounded w-[18rem] p-2'
+                />
+                <input
+                  type='number'
+                  value={price}
+                  onChange={(event) => setPrice(event.target.value)}
+                  placeholder='Price'
+                  className='border border-gray-400 rounded w-[18rem] p-2'
+                />
+                <input
+                  type='text'
+                  value={image}
+                  onChange={(event) => setImage(event.target.value)}
+                  placeholder='Image URL'
+                  className='border border-gray-400 rounded w-[18rem] p-2'
+                />
+              </div>
+              {
+                !saveButton &&
+                (<button className='bg-orange-500 text-white w-full rounded font-semibold hover:bg-orange-600 p-3'>
+                  Save
+                </button>)
+              }
+            </form>
           </div>
-          <div>
-            <input type='number' value={quantity} onChange={(event) => setQuantity(event.target.value)} className='w-full p-3 rounded border' placeholder='Quantity' />
-          </div>
-          <div>
-            <input type='number' value={price} onChange={(event) => setPrice(event.target.value)} className='w-full p-3 rounded border' placeholder='Price' />
-          </div>
-          <div>
-            <input type='text' value={image} onChange={(event) => setImage(event.target.value)} className='w-full p-3 rounded border' placeholder='Image URL' />
-          </div>
-          {
-            !loading &&
-            (<div className='flex justify-around pt-5'>
-              <button className='bg-blue-500 py-3 px-12 rounded-md hover:bg-blue-400 text-white font-bold'>
-                Save
-              </button>
-              <Link to='/' className='bg-blue-500 py-3 px-11 rounded-md hover:bg-blue-400 text-white font-bold'>
-                Cancel
-              </Link>
-            </div>)
-          }
         </div>
-      </form>
+      </div>
     </div>
   )
 }

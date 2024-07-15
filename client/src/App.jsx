@@ -8,11 +8,11 @@ const App = () => {
   return (
     <div>
 
-      <nav className='bg-gray-800'>
+      <nav className='bg-orange-600 p-4'>
         <div className='container p-2'>
-          <Link href='/'>
+          <Link to='/'>
             <h2 className='text-2xl font-bold text-white'>
-              React CRUD
+              Restaurant App
             </h2>
           </Link>
         </div>

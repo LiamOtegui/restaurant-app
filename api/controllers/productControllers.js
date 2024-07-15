@@ -6,7 +6,7 @@ const postProduct = asyncHandler(async (req, res) => {
         const product = await Product.create(req.body)
         res.status(200).json(product)
     } catch (error) {
-        res.status(error.message)
+        res.status(500)
         throw new Error(error.message)
     }
 })
