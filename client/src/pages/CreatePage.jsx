@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import upperCase from '../utils/upperCase'
+import { toast } from 'react-toastify'
 
 const CreatePage = () => {
 
@@ -16,7 +17,7 @@ const CreatePage = () => {
   const onSubmitForm = async (event) => {
     event.preventDefault()
     if (name === '' || quantity === '' || price === '' || image === '') {
-      alert('Please fill all the inputs')
+      toast.warn('Please fill all the inputs')
       return
     }
     try {
@@ -27,11 +28,11 @@ const CreatePage = () => {
         price: price,
         image: image
       })
-      alert(`${upperCase(response.data.name)} was created with success!`)
+      toast.success(`${upperCase(response.data.name)} was created with success!`)
       setSaveButton(false)
       navigate('/')
     } catch (error) {
-      console.log();
+      toast.error(error.message)
     }
   }
 

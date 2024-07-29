@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import upperCase from '../utils/upperCase'
 
 const Products = ({ product }) => {

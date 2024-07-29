@@ -2,6 +2,8 @@ import React from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import CreatePage from './pages/CreatePage'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
@@ -12,7 +14,7 @@ const App = () => {
         <div className='container p-2'>
           <Link to='/'>
             <h2 className='text-2xl font-bold text-white'>
-              Restaurant App
+              Supermarket app
             </h2>
           </Link>
         </div>
@@ -24,6 +26,9 @@ const App = () => {
           <Route path='/create' element={<CreatePage />} />
         </Routes>
       </div>
+
+      <ToastContainer />
+
     </div>
   )
 }
